@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.example.myjettrivia.screens.QuestionViewModel
+import com.example.myjettrivia.screens.TriviaHome
 import com.example.myjettrivia.ui.theme.MyJetTriviaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,27 +31,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     TriviaHome()
-
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun TriviaHome(viewModel: QuestionViewModel = hiltViewModel()) {
-    Questions(viewModel = viewModel)
-}
-
-@Composable
-fun Questions(viewModel: QuestionViewModel) {
-    val questions = viewModel.data.value.data?.toMutableList()
-    if(viewModel.data.value.loading == true) {
-        Log.d("#Loading", "Questions: ...Loading")
-    } else {
-        Log.d("#Loading", "Questions: Loading STOPPED...")
-        questions?.forEach { questionItem ->
-            Log.d("#Result", "Questions: ${questionItem.question}")
         }
     }
 }

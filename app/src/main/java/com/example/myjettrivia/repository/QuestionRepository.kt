@@ -22,7 +22,7 @@ class QuestionRepository @Inject constructor(
 
         } catch (exception: Exception) {
             dataOrException.e = exception
-            Log.d(TAG,"getAllQuestions: ${!dataOrException.e!!.localizedMessage }")
+            Log.d(TAG,"getAllQuestions: ${dataOrException.e!!.localizedMessage }")
         }
         return dataOrException
     }

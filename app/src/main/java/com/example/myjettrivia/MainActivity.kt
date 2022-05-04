@@ -1,6 +1,8 @@
 package com.example.myjettrivia
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,8 +12,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import com.example.myjettrivia.screens.QuestionViewModel
 import com.example.myjettrivia.ui.theme.MyJetTriviaTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    TriviaHome()
+
                 }
             }
         }
@@ -30,14 +38,27 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun TriviaHome(viewModel: QuestionViewModel = hiltViewModel()) {
+    Questions(viewModel = viewModel)
+}
+
+@Composable
+fun Questions(viewModel: QuestionViewModel) {
+    val questions = viewModel.data.value.data?.toMutableList()
+    if(viewModel.data.value.loading == true) {
+        Log.d("#Loading", "Questions: ...Loading")
+    } else {
+        Log.d("#Loading", "Questions: Loading STOPPED...")
+        questions?.forEach { questionItem ->
+            Log.d("#Result", "Questions: ${questionItem.question}")
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyJetTriviaTheme {
-        Greeting("Android")
+
     }
 }

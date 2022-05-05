@@ -20,9 +20,9 @@ class QuestionViewModel @Inject constructor(
         DataOrException(null, true, Exception(""))
     )
 
-init {
-    getAllQuestions()
-}
+    init {
+        getAllQuestions()
+    }
 
     private fun getAllQuestions() {
         viewModelScope.launch {
@@ -34,5 +34,8 @@ init {
         }
     }
 
+    fun getTotalQuestionCount(): Int {
+        return data.value.data?.toMutableList()?.size!!
+    }
 
 }
